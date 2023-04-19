@@ -3,6 +3,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+def calc_results(y_true,y_preds):
+  model_accuracy = accuracy_score(y_true, y_preds) * 100
+  # Calculate model precision, recall and f1 score using "weighted" average
+  model_precision, model_recall, model_f1, _ = precision_recall_fscore_support(y_true, y_preds, average="weighted")
+  model_results = {"accuracy": model_accuracy,
+                  "precision": model_precision,
+                  "recall": model_recall,
+                  "f1": model_f1}
+  return model_results
+
+
 import pathlib 
 import numpy as np 
 data_dir = pathlib.Path("pizza_steak/train")
@@ -332,13 +345,4 @@ def compare_historys(original_history, new_history, initial_epochs=5):
 
     
     
-from sklearn.metrics import accuracy_score, precision_recall_fscore_support
-def calc_results(y_true,y_preds):
-  model_accuracy = accuracy_score(y_true, y_preds) * 100
-  # Calculate model precision, recall and f1 score using "weighted" average
-  model_precision, model_recall, model_f1, _ = precision_recall_fscore_support(y_true, y_preds, average="weighted")
-  model_results = {"accuracy": model_accuracy,
-                  "precision": model_precision,
-                  "recall": model_recall,
-                  "f1": model_f1}
-  return model_results
+
